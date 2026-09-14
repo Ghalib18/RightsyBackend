@@ -26,5 +26,6 @@ public class VerficationCode {
     private OtpType type;
     private Boolean used=false;
     @Column(nullable = false)
-    private LocalDateTime expiryTime;
+    private LocalDateTime expiresAt;
+    private LocalDateTime createdAt;
 }
