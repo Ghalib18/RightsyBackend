@@ -1,9 +1,6 @@
 package com.Rightsy.demo.controller;
 
-import com.Rightsy.demo.Dto.LoginRequestDto;
-import com.Rightsy.demo.Dto.LoginResponseDto;
-import com.Rightsy.demo.Dto.SignupRequestDto;
-import com.Rightsy.demo.Dto.SignupResponseDto;
+import com.Rightsy.demo.Dto.*;
 import com.Rightsy.demo.security.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,5 +23,10 @@ public class AuthController {
     @PostMapping("signup")
     public ResponseEntity<SignupResponseDto> signup(@RequestBody SignupRequestDto  signupRequestDto){
         return ResponseEntity.ok(authService.signup(signupRequestDto));
+    }
+
+    @PostMapping("verify")
+    public ResponseEntity<ApiResponseDto> verify(@RequestBody VerifyEmailRequestDto verifyEmailRequestDto){
+        return ResponseEntity.ok(authService.verifyEmail(verifyEmailRequestDto));
     }
 }

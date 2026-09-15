@@ -40,6 +40,7 @@ public class AuthService {
                 .email(signupRequestDto.getEmail())
                 .password(passwordEncoder.encode(signupRequestDto.getPassword()))
                 .role(Role.USER)
+                .emailVerified(false)
                 .build());
         otpService.generateAndSendOtp(signupRequestDto.getEmail(),OtpType.EmailVerfication);
 

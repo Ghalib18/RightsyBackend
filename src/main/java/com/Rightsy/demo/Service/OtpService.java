@@ -15,7 +15,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class OtpService {
     private final VerficationCodeRepo verficationCodeRepo;
-    private VerficationService verficationService;
+    private final  VerficationService verficationService;
 
     public String generateOtpCode(String email, OtpType otpType){
 
