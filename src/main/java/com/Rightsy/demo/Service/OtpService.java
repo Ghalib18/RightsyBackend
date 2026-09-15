@@ -4,6 +4,7 @@ import com.Rightsy.demo.Dto.OtpType;
 import com.Rightsy.demo.entity.VerficationCode;
 import com.Rightsy.demo.repository.VerficationCodeRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
@@ -36,5 +37,10 @@ public class OtpService {
         String otp=generateOtpCode(email,otpType);
         verficationService.sendOtp(email,otp,otpType);
 
+    }
+
+    @Scheduled(fixedRate=60000)
+    public void deleteOtp(){
+        verficationCodeRepo.deleteByExpiresAtBefore(LocalDateTime.now());
     }
 }
