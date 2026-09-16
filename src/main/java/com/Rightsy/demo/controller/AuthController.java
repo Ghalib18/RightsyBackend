@@ -29,4 +29,18 @@ public class AuthController {
     public ResponseEntity<ApiResponseDto> verify(@RequestBody VerifyEmailRequestDto verifyEmailRequestDto){
         return ResponseEntity.ok(authService.verifyEmail(verifyEmailRequestDto));
     }
+
+    @PostMapping("forgetPassword")
+    public ResponseEntity<ApiResponseDto> forgetPassword(@RequestBody ForgetPasswordRequestDto forgetPasswordRequestDto){
+        return ResponseEntity.ok(authService.forgetPassword(forgetPasswordRequestDto));
+    }
+
+    @PostMapping("verifyOtp")
+    public ResponseEntity<ApiResponseDto> verifyOtp(@RequestBody VerifyEmailRequestDto verifyEmailRequestDto){
+        return ResponseEntity.ok(authService.verifyCode(verifyEmailRequestDto));
+    }
+    @PostMapping("resetPassword")
+    public ResponseEntity<ApiResponseDto> resetPassword(@RequestBody PasswordResetDto passwordResetDto){
+        return ResponseEntity.ok(authService.passwordReset(passwordResetDto));
+    }
 }

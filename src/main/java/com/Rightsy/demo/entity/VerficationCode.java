@@ -28,4 +28,5 @@ public class VerficationCode {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
     private LocalDateTime createdAt;
+    private Boolean verified;
 }

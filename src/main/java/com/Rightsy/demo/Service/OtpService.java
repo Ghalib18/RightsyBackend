@@ -25,6 +25,7 @@ public class OtpService {
                 .code(otpCode)
                 .type(otpType)
                 .used(false)
+                .verified(false)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(15))
                 .build();

@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -90,5 +89,51 @@ public class AuthService {
         catch (BadCredentialsException e){
             throw  new BadCredentialsException("Invalid Credentials");
         }
+    }
+
+    public ApiResponseDto forgetPassword(ForgetPasswordRequestDto forgetPasswordRequestDto){
+        User user= userRepo.findByEmail(forgetPasswordRequestDto.getEmail())
+                .orElseThrow(()-> new IllegalArgumentException("User Not Found"));
+
+        otpService.generateAndSendOtp(forgetPasswordRequestDto.getEmail(),OtpType.ForgotPassword);
+        return new ApiResponseDto("Opt has been sent to "+forgetPasswordRequestDto.getEmail(),true);
+
+    }
+
+    public ApiResponseDto verifyCode(VerifyEmailRequestDto verifyEmailRequestDto){
+
+        VerficationCode verficationCode=verficationCodeRepo.findTopByEmailAndTypeAndUsedFalseOrderByCreatedAtDesc(verifyEmailRequestDto.getEmail(),OtpType.ForgotPassword)
+                .orElseThrow(()-> new IllegalArgumentException("VerficationCode Not found"));
+
+        if(verficationCode.getExpiresAt().isBefore(LocalDateTime.now())){
+            throw  new IllegalArgumentException("VerificationCode Expired");
+        }
+        if(!verficationCode.getCode().equals(verifyEmailRequestDto.getCode())){
+            throw new IllegalArgumentException("Invalid verfication code");
+        }
+
+        verficationCode.setVerified(true);
+        verficationCodeRepo.save(verficationCode);
+
+        return new ApiResponseDto("Otp has been Verified",true);
+
+    }
+
+    public ApiResponseDto passwordReset(PasswordResetDto passwordResetDto){
+        VerficationCode verficationCode=verficationCodeRepo.findTopByEmailAndTypeAndUsedFalseOrderByCreatedAtDesc(passwordResetDto.getEmail(),OtpType.ForgotPassword)
+                .orElseThrow(()-> new IllegalArgumentException("VerficationCode Not found"));
+
+        if(!verficationCode.getVerified()){
+            throw  new IllegalArgumentException("Otp has Not been verified");
+        }
+
+        User user=userRepo.findByEmail(passwordResetDto.getEmail())
+                .orElseThrow(()-> new IllegalArgumentException("User Not Found"));
+
+        user.setPassword(passwordEncoder.encode(passwordResetDto.getNewPassword()));
+        userRepo.save(user);
+        verficationCode.setUsed(true);
+        verficationCodeRepo.save(verficationCode);
+        return new ApiResponseDto("Password Reset Successfully",true);
     }
 }
