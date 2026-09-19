@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,11 +17,11 @@ public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long quiz_Id;
+    private Long quizId;
 
     private String topic;
 
     @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<QuizQuestion> questions;
+    private List<QuizQuestion> questions=new ArrayList<>();
 
 }

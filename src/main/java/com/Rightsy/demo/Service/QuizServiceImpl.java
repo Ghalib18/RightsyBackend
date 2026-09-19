@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -91,7 +90,7 @@ public class QuizServiceImpl implements QuizService {
         Quiz quiz = quizRepo.findById(quizAnswerReqDto.getQuizId())
                 .orElseThrow(() -> new EntityNotFoundException("Quiz not found"));
 
-        List<QuizAttempt> attempts= quizAttemptRepo.findByUserIdAndQuizId(user.getId(),quizAnswerReqDto.getQuizId());
+        List<QuizAttempt> attempts= quizAttemptRepo.findByUserIdAndQuizQuizId(user.getId(),quizAnswerReqDto.getQuizId());
 
         // Calculating the score for this attempt
         int score=0;
@@ -139,7 +138,7 @@ public class QuizServiceImpl implements QuizService {
         User user= userRepo.findByEmail(email)
                 .orElseThrow(()-> new EntityNotFoundException(("user not found")));
 
-        List<QuizAttempt> attemptList=quizAttemptRepo.findByUserIdAndQuizId(user.getId(),id);
+        List<QuizAttempt> attemptList=quizAttemptRepo.findByUserIdAndQuizQuizId(user.getId(),id);
 
         return attemptList;
 

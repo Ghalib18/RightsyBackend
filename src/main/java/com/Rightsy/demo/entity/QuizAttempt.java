@@ -20,11 +20,11 @@ public class QuizAttempt {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(table = "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(table = "quiz_id")
+    @JoinColumn(name= "quiz_id")
     private Quiz quiz;
 
     private LocalDateTime attemptTime;

@@ -31,6 +31,7 @@ public class AdminInit implements CommandLineRunner {
                     .email(email)
                     .password(passwordEncoder.encode(password))
                     .role(Role.ADMIN)
+                    .emailVerified(true)
                     .build();
             userRepo.save(user);
         }
