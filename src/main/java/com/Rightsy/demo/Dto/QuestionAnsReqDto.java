@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class QuestionAnsReqDto {
 
-    private Long QuestionId;
+    private Long questionId;
     private String answer;
 
 }

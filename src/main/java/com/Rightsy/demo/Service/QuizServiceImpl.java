@@ -95,13 +95,25 @@ public class QuizServiceImpl implements QuizService {
         // Calculating the score for this attempt
         int score=0;
 
+
+        System.out.println("Quiz ID = " + quiz.getQuizId());
+        System.out.println("Number of questions = " + quiz.getQuestions().size());
+
+        for (QuizQuestion question : quiz.getQuestions()) {
+            System.out.println("DB Question ID = " + question.getQuestionId());
+        }
+
         for(QuestionAnsReqDto q:quizAnswerReqDto.getAnswers()){
+
+            System.out.println("Submitted Question ID = " + q.getQuestionId());
 
             QuizQuestion quizQuestion=quiz.getQuestions()
                     .stream()
                     .filter(qt->qt.getQuestionId().equals(q.getQuestionId()))
                     .findFirst()
                     .orElseThrow(()-> new EntityNotFoundException("question not found"));
+
+            System.out.println("Found question = " + quizQuestion.getQuestionId());
 
             if(quizQuestion.getAnswer().equalsIgnoreCase(q.getAnswer())){
                 score=score+1;
