@@ -11,7 +11,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -20,27 +23,42 @@ public class SrtServiceImpl implements SrtService {
 
     private final SrtRepo srtRepo;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
+
 
     @Override
-    public ApiResponseDto createSrt(CreateSrtReqDto createSrtReqDto) {
+    @Transactional
+    public ApiResponseDto createSrt(CreateSrtReqDto createSrtReqDto, List<MultipartFile> images)  {
         Srt srt=new Srt();
         srt.setTopic(createSrtReqDto.getTopic());
 
-        for(SrtQuestionReqDto s:createSrtReqDto.getQuestions()){
-            SrtQuestion question=new SrtQuestion();
+        for (int i = 0; i < createSrtReqDto.getQuestions().size(); i++) {
+
+            SrtQuestionReqDto s = createSrtReqDto.getQuestions().get(i);
+
+            SrtQuestion question = new SrtQuestion();
 
             question.setQuestion(s.getQuestion());
             question.setPrerequisites(s.getPrerequisites());
+
             question.setAnswer(s.getAnswer());
+
             question.setNoteA(s.getNoteA());
             question.setNoteB(s.getNoteB());
             question.setNoteC(s.getNoteC());
             question.setNoteD(s.getNoteD());
+
             question.setOptionA(s.getOptionA());
             question.setOptionB(s.getOptionB());
             question.setOptionC(s.getOptionC());
             question.setOptionD(s.getOptionD());
-            question.setImageUrl(s.getImageUrl());
+
+            // Upload corresponding image
+            String imageUrl = cloudinaryService.uploadImage(images.get(i));
+
+            question.setImageUrl(imageUrl);
+
+            // Connect question to SRT
             question.setSrt(srt);
 
             srt.getQuestions().add(question);

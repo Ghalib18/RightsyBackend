@@ -2,6 +2,7 @@ package com.Rightsy.demo.Dto;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.Getter;
 
@@ -12,9 +13,7 @@ import java.util.List;
 public class SrtQuestionReqDto {
     @NotBlank
     private String question;
-    @NotBlank
-    private String imageUrl;
-    @NotBlank
+    @NotEmpty
     private List<String> prerequisites;
     @NotBlank
     private String optionA;
