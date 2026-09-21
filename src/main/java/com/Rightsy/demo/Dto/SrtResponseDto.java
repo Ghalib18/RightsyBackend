@@ -14,6 +14,6 @@ public class SrtResponseDto {
 
     private Long id;
     private String topic;
-    private List< SrtQuestionReqDto> questions;
+    private List< SrtQuestionResponseDto> questions;
 
 }
