@@ -14,8 +14,9 @@ A production-ready Spring Boot REST API powering a child-centric interactive lea
 [![Cloudinary](https://img.shields.io/badge/Cloudinary-Media%20Storage-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)](https://cloudinary.com/)
 
 <br/>
+<img width="1871" height="842" alt="image" src="https://github.com/user-attachments/assets/eff701e9-a091-40c8-8767-474e42c2b987" />
 
-<img src="./assets/rightsy-overview.png" alt="Rightsy Overview" width="850" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
+
 
 </div>
 
